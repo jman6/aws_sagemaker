@@ -20,7 +20,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # install R packages
 RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'remotes'), repos = 'https://cloud.r-project.org/')"
-RUN Rscript --no-save -e "remotes::install_github('EliLillyCo/dhai.ca.model', auth_token = 'c19dfd70af371f16618f063e72ee193b5af0fbbf')"
+RUN Rscript --no-save -e "remotes::install_github('EliLillyCo/dhai.ca.model', auth_token = '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')"
 
 # Copy R runtime and inference code
 COPY runtime.R predict.R ${LAMBDA_TASK_ROOT}/
