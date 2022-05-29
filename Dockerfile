@@ -1,6 +1,6 @@
 FROM public.ecr.aws/lambda/provided
 
-ARG CONN__STRING
+ARG CONN_STRING
 
 ENV R_VERSION=4.2.0
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
