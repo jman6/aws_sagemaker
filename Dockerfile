@@ -1,7 +1,10 @@
 FROM public.ecr.aws/lambda/provided
 
+ARG CONN__STRING
+
 ENV R_VERSION=4.2.0
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
+ENV SECRET_PAT=CONN_STRING
 
 # install R
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
@@ -20,7 +23,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # install R packages
 RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'remotes'), repos = 'https://cloud.r-project.org/')"
-RUN Rscript --no-save -e "remotes::install_github('EliLillyCo/dhai.ca.model', auth_token = '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')"
+RUN Rscript --no-save -e "remotes::install_github('EliLillyCo/dhai.ca.model', auth_token = ${SECRET_PAT})"
 
 # Copy R runtime and inference code
 COPY runtime.R predict.R ${LAMBDA_TASK_ROOT}/
