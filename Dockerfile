@@ -23,7 +23,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # install R packages
 RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'remotes'), repos = 'https://cloud.r-project.org/')"
-RUN Rscript print(${PRIVATE_TOKEN})
+RUN Rscript -e "print(${PRIVATE_TOKEN})"
 RUN Rscript --no-save -e "remotes::install_github('EliLillyCo/dhai.ca.model', auth_token = ${PRIVATE_TOKEN})"
 
 # Copy R runtime and inference code
