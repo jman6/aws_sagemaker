@@ -19,7 +19,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm -f awscliv2.zip
     
 # install ssh client and git
-RUN apk add --no-cache openssh-client git
+RUN yum -y install --no-cache openssh-client git
 
 # download public key for github.com
 RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
