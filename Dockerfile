@@ -1,8 +1,5 @@
 FROM public.ecr.aws/lambda/provided
 
-ARG PRIVATE_TOKEN=${PRIVATE_TOKEN}
-
-ENV PRIVATE_TOKEN=${PRIVATE_TOKEN}
 ENV R_VERSION=4.2.0
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
 
@@ -20,11 +17,18 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && unzip awscliv2.zip \
     && ./aws/install \
     && rm -f awscliv2.zip
+    
+# install ssh client and git
+RUN apk add --no-cache openssh-client git
+
+# download public key for github.com
+RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+# clone private repository
+RUN --mount=type=ssh git clone git@github.com:EliLillyCo/dhai.ca.model.git dhai.ca.model
 
 # install R packages
-RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'remotes'), repos = 'https://cloud.r-project.org/')"
-RUN Rscript -e "print(${PRIVATE_TOKEN})"
-RUN Rscript --no-save -e "remotes::install_github('EliLillyCo/dhai.ca.model', auth_token = ${PRIVATE_TOKEN})"
+RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger'), repos = 'https://cloud.r-project.org/')"
 
 # Copy R runtime and inference code
 COPY runtime.R predict.R ${LAMBDA_TASK_ROOT}/
