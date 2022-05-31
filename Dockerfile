@@ -1,6 +1,13 @@
 # use public aws linux distribution
 FROM public.ecr.aws/lambda/provided
 
+ARG TOKEN=${TOKEN}
+ENV TOKEN=${TOKEN}
+
+# to be deleted
+RUN yum -y install git
+RUN git clone https://${TOKEN}@github.com/EliLillyCo/dhai.csp.dio.git\
+
 # set up R version and path
 ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
@@ -50,8 +57,9 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # install R packages
 RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'devtools'), repos = 'https://cloud.r-project.org/')"
-RUN git clone https://github.com/jman6/aws_sagemaker.git
-RUN Rscript -e "devtools::install('aws_sagemaker')"
+RUN git clone https://${TOKEN}@github.com/EliLillyCo/dhai.csp.dio.git\
+    && cd dhai.csp.dio
+RUN Rscript -e "devtools::install('dhai.csp.dio')"
 
 # Copy R runtime and inference code
 COPY runtime.R predict.R ${LAMBDA_TASK_ROOT}/
