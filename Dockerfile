@@ -22,10 +22,9 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm -f awscliv2.zip
 
 # install R packages
-RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'remotes'), repos = 'https://cloud.r-project.org/')"
-# RUN Rscript -e "remotes::install_github('jman6/aws_sagemaker', auth_token = ${TOKEN})"
-
-RUN git clone https://${TOKEN}@github.com/jman6/aws_sagemaker.git
+RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger'), repos = 'https://cloud.r-project.org/')"
+RUN git clone https://github.com/jman6/aws_sagemaker.git
+RUN Rscript -e "install.packages('aws_sagemaker')"
 
 # Copy R runtime and inference code
 COPY runtime.R predict.R ${LAMBDA_TASK_ROOT}/
