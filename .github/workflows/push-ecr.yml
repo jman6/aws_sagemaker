@@ -36,5 +36,5 @@ jobs:
         IMAGE_TAG: sagemaker-testing
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        docker build --build-args TOKEN=$TOKEN -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build --build-arg TOKEN=$TOKEN -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         # docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
