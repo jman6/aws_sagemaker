@@ -6,7 +6,7 @@ ENV TOKEN=${TOKEN}
 
 # to be deleted
 RUN yum -y install git
-RUN git clone https://${TOKEN}@github.com/EliLillyCo/dhai.csp.dio.git\
+RUN git clone https://${TOKEN}@github.com/EliLillyCo/dhai.csp.dio.git
 
 # set up R version and path
 ENV R_VERSION=4.1.2
@@ -57,7 +57,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # install R packages
 RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'devtools'), repos = 'https://cloud.r-project.org/')"
-RUN git clone https://${TOKEN}@github.com/EliLillyCo/dhai.csp.dio.git\
+RUN git clone https://${TOKEN}@github.com/EliLillyCo/dhai.csp.dio.git \
     && cd dhai.csp.dio
 RUN Rscript -e "devtools::install('dhai.csp.dio')"
 
