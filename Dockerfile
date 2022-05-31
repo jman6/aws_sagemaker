@@ -5,6 +5,16 @@ FROM public.ecr.aws/lambda/provided
 ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
 
+# install R
+RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+    && yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm \
+    openssl-devel \
+    libxml2-devel \
+    unzip \
+    git \
+    && yum clean all \
+    && rm -rf /var/cache/yum/*
+    
 # install sudo, wget and openssl which are required for building CMake
 RUN yum install sudo wget openssl-devel -y
 
@@ -31,16 +41,6 @@ RUN git clone "https://github.com/libgit2/libgit2" \
     && cmake --build . --target install \
     && cd .. \
     && rm -rf libgit2
-
-# install R
-RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-    && yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm \
-    openssl-devel \
-    libxml2-devel \
-    unzip \
-    git \
-    && yum clean all \
-    && rm -rf /var/cache/yum/*
 
 # install AWS CLI
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
