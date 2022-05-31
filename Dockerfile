@@ -4,7 +4,7 @@ ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
 
 # install R
-RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm \
+RUN yum -y install --skip-broken https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm \
     && yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm \
     openssl-devel \
     libxml2-devel \
