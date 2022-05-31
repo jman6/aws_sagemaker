@@ -10,7 +10,6 @@ RUN yum -y install git \
 RUN git clone "https://github.com/libgit2/libgit2" \
     && cd libgit2 \
     && mkdir build && cd build \
-    && sudo su \
     && cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local \
     && cmake --build . --target install \
     && cd .. \
