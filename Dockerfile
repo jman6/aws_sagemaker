@@ -1,9 +1,9 @@
-FROM public.ecr.aws/lambda/provided:al2.2022.05.31.10
+FROM public.ecr.aws/lambda/provided
 
 ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
 
-RUN yum -y install libgit2-devel
+RUN yum -y install libgit2
 
 # install R
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
