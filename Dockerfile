@@ -1,12 +1,29 @@
-FROM public.ecr.aws/lambda/provided:al2.2022.05.31.10
+# use public aws linux distribution
+FROM public.ecr.aws/lambda/provided
 
+# set up R version and path
 ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
 
+# install sudo, wget and openssl which are required for building CMake
+RUN yum install sudo wget openssl-devel -y
+
+# dnstall development tools
+RUN sudo yum groupinstall "Development Tools" -y
+
+# download, build and install cmake
+RUN wget https://cmake.org/files/v3.18/cmake-3.18.0.tar.gz \
+    && tar -xvzf cmake-3.18.0.tar.gz \
+    && cd cmake-3.18.0 \
+    && ./bootstrap \
+    && make \
+    && sudo make install
+    
+# install git and pkg-config which are required for building libgit2
 RUN yum -y install git \
-    cmake \
     pkg-config
     
+# clone libgit2 from source as it is a dependency for R package 'devtools' and is not yet available in Amazon Linux
 RUN git clone "https://github.com/libgit2/libgit2" \
     && cd libgit2 \
     && mkdir build && cd build \
