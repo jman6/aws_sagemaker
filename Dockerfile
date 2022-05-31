@@ -4,7 +4,7 @@ ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
 
 # install R
-RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm \
     && yum -y install https://cdn.rstudio.com/r/centos-7/pkgs/R-${R_VERSION}-1-1.x86_64.rpm \
     openssl-devel \
     libxml2-devel \
@@ -23,7 +23,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     && rm -f awscliv2.zip
 
 # install R packages
-RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'usethis', 'devtools'), repos = 'https://cloud.r-project.org/')"
+RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'devtools'), repos = 'https://cloud.r-project.org/')"
 RUN git clone https://github.com/jman6/aws_sagemaker.git
 RUN Rscript -e "devtools::install('aws_sagemaker')"
 
