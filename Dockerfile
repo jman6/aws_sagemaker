@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/provided
+FROM public.ecr.aws/lambda/provided:latest
 
 ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
