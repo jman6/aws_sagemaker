@@ -11,6 +11,9 @@ RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.n
     unzip \
     && yum clean all \
     && rm -rf /var/cache/yum/*
+    
+# install git
+RUN yum -y install git
 
 # install AWS CLI
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
