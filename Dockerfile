@@ -3,18 +3,7 @@ FROM public.ecr.aws/lambda/provided
 ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
 
-# install dependencies for libgit2-devel
-RUN yum -y install cmake \
-    pkg-config \
-    git
-
-# install libgit2-devel
-RUN git clone --depth=1 -b v1.0.0 https://github.com/libgit2/libgit2.git ~/libgit2_src \
-    && cd ~/libgit2_src \
-    && cmake . -DBUILD_CLAR=OFF -DCMAKE_BUILD_TYPE=Release -DEMBED_SSH_PATH=~/libssh2_src -DCMAKE_INSTALL_PREFIX=~/libgit2 \
-    && cmake --build . --target install \
-    && cp -r ~/libgit2/* /usr/bin \
-    && cp -r ~/libgit2/* /usr/local
+RUN yum -y install libgit2-devel
 
 # install R
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
@@ -22,6 +11,7 @@ RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.n
     openssl-devel \
     libxml2-devel \
     unzip \
+    git \
     && yum clean all \
     && rm -rf /var/cache/yum/*
 
