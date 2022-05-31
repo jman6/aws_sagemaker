@@ -3,7 +3,18 @@ FROM public.ecr.aws/lambda/provided:al2.2022.05.31.10
 ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
 
-RUN yum -y install libgit2
+RUN yum -y install git \
+    cmake \
+    pkg-config
+    
+RUN git clone "https://github.com/libgit2/libgit2" \
+    && cd libgit2 \
+    && mkdir build && cd build \
+    && sudo su \
+    && cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local \
+    && cmake --build . --target install \
+    && cd .. \
+    && rm -rf libgit2
 
 # install R
 RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
