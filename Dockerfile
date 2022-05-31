@@ -4,10 +4,6 @@ FROM public.ecr.aws/lambda/provided
 ARG TOKEN=${TOKEN}
 ENV TOKEN=${TOKEN}
 
-# to be deleted
-RUN yum -y install git
-RUN git clone https://${TOKEN}@github.com/EliLillyCo/dhai.csp.dio.git
-
 # set up R version and path
 ENV R_VERSION=4.1.2
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
