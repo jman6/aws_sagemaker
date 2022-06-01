@@ -5,7 +5,7 @@ ARG TOKEN=${TOKEN}
 ENV TOKEN=${TOKEN}
 
 # set up R version and path
-ENV R_VERSION=4.1.2
+ENV R_VERSION=3.6.3
 ENV PATH="${PATH}:/opt/R/${R_VERSION}/bin/"
 
 # install R
@@ -53,7 +53,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # install R packages
 RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'devtools'), repos = 'https://cloud.r-project.org/')"
-RUN git clone https://${TOKEN}@github.com/EliLillyCo/dhai.ca.model.git \
+RUN git clone https://${TOKEN}@github.com/EliLillyCo/aads_trial_enrollment.git \
     && cd dhai.ca.model
 RUN Rscript -e "devtools::install('dhai.ca.model')"
 
