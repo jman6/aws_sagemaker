@@ -19,6 +19,7 @@ RUN yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.n
     postgresql-devel \
     libjpeg* \
     libpng* \
+    java-1.8.0-openjdk-devel \
     && yum clean all \
     && rm -rf /var/cache/yum/*
     
