@@ -53,9 +53,9 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 
 # install R packages
 RUN Rscript -e "install.packages(c('httr', 'logger', 'glue', 'jsonlite', 'Rcpp', 'ranger', 'devtools'), repos = 'https://cloud.r-project.org/')"
-RUN git clone https://${TOKEN}@github.com/EliLillyCo/aads_trial_enrollment.git \
-    && cd dhai.ca.model
-RUN Rscript -e "devtools::install('dhai.ca.model')"
+RUN git clone -b 2020_08_dev_pg --single-branch https://${TOKEN}@github.com/EliLillyCo/aads_trial_enrollment.git \
+    && cd aads_trial_enrollment
+RUN Rscript -e "devtools::install('aads_trial_enrollment')"
 
 # Copy R runtime and inference code
 COPY runtime.R predict.R ${LAMBDA_TASK_ROOT}/
